@@ -4,7 +4,6 @@ import com.teachit.teachItBackEnd.model.User;
 import com.teachit.teachItBackEnd.repository.RegistrationRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 
 
 @Service

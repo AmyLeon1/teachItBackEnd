@@ -4,9 +4,12 @@ package com.teachit.teachItBackEnd.controller;
 import com.teachit.teachItBackEnd.model.User;
 import com.teachit.teachItBackEnd.service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class RegistrationController {
 
@@ -17,8 +20,8 @@ public class RegistrationController {
     //save data into the db
     //@RequestMapping to map it to a URL
 
-
-    @PostMapping(path= "/registeruser")
+    //@CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping(path= "/registerUser")
     public User registerUser(@RequestBody User user) throws Exception {
 
         //check if email already exists in db
@@ -37,6 +40,7 @@ public class RegistrationController {
         return userObj;
     }
 
+   // @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/login")
     public User loginUser(@RequestBody User user) throws Exception {
         //check if combo user id and password is present in db
@@ -54,5 +58,10 @@ public class RegistrationController {
         }
         return userObj;
     }
+
+
+
+
+
 
 }
