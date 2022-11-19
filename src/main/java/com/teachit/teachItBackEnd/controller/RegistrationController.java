@@ -1,13 +1,15 @@
 package com.teachit.teachItBackEnd.controller;
 
 
+import com.teachit.teachItBackEnd.model.Blog;
+import com.teachit.teachItBackEnd.model.Todo;
 import com.teachit.teachItBackEnd.model.User;
+import com.teachit.teachItBackEnd.repository.RegistrationRepo;
 import com.teachit.teachItBackEnd.service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -16,6 +18,9 @@ public class RegistrationController {
     //use Autowired to inject dependency
     @Autowired
     private RegistrationService  registrationService;
+
+    @Autowired
+    private RegistrationRepo regRepo;
     //method whenever user submits the form
     //save data into the db
     //@RequestMapping to map it to a URL
@@ -59,7 +64,22 @@ public class RegistrationController {
         return userObj;
     }
 
+    //retrieve user details by searching their username
+    //get request
+    //username path variable
 
+    //get user details by searching email
+    @GetMapping("/users/{email}")
+    public User getUser(@PathVariable String email){
+        return regRepo.findByEmail(email);
+        //return todoService.findById(id);
+    }
+
+    @GetMapping("/users")
+    public List<User> getAllUsers(){
+        return regRepo.findAll();
+        //return todoService.findAll();
+    }
 
 
 

@@ -4,7 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@Data
+
 @Getter
 @Setter
 @ToString
@@ -13,11 +13,10 @@ import javax.persistence.*;
 @Entity
 public class PostTest {
 
-
+    //@Column(name = "id")
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    @Column(name = "id")
-    private long id;
+    @GeneratedValue()
+    private int id;
     private String title;
     private String body;
     private String email;

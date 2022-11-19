@@ -25,16 +25,16 @@ public class PostTestController {
     private PostTestService postTestService;
 
 
-    @PostMapping(path= "/addPost")
-    public PostTest addPost(@RequestBody PostTest post) throws Exception {
-
-
-        PostTest postObj = null;
-
-        //pass in user to the registration service save method
-         postObj  = postTestService.saveNewPost(post);
-        return postObj;
-    }
+//    @PostMapping(path= "/addPost")
+//    public PostTest addPost(@RequestBody PostTest post) throws Exception {
+//
+//
+//        PostTest postObj = null;
+//
+//        //pass in user to the registration service save method
+//         postObj  = postTestService.saveNewPost(post);
+//        return postObj;
+//    }
 
 
 
@@ -51,7 +51,7 @@ public class PostTestController {
 
 
     @GetMapping("/users/{email}/posts/{id}")
-    public PostTest getPost(@PathVariable String email, @PathVariable long id){
+    public PostTest getPost(@PathVariable String email, @PathVariable int id){
         return postTestRepositoryRepo.findById(id).get();
         //return todoService.findById(id);
     }
@@ -59,7 +59,7 @@ public class PostTestController {
     //DELETE /users/{username}/todos/{id}
     @DeleteMapping("/users/{email}/posts/{id}")
     public ResponseEntity<Void> deletePost(
-            @PathVariable String email, @PathVariable long id){
+            @PathVariable String email, @PathVariable int id){
 
         //Todo todo = todoService.deleteById(id);
         postTestRepositoryRepo.deleteById(id);
@@ -73,7 +73,7 @@ public class PostTestController {
     @PutMapping("/users/{email}/posts/{id}")
     public ResponseEntity<PostTest> updatePostTest(
             @PathVariable String email,
-            @PathVariable long id, @RequestBody PostTest postTest){
+            @PathVariable int id, @RequestBody PostTest postTest){
 
         //Todo todoUpdated = todoService.save(todo);
         PostTest postTestupdated = postTestRepositoryRepo.save(postTest);

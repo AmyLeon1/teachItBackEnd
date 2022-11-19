@@ -5,7 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
-@Data
+
 @Getter
 @Setter
 @ToString
@@ -22,10 +22,12 @@ public class User implements Serializable {
     private String email;
     private String username;
     private String password;
+
+
     //one user many posts
     //mapped by the user variable in the post entity
-    @OneToMany(mappedBy = "user")
-    private List<PostTest> postTests;
+//    @OneToMany(mappedBy = "user")
+//    private List<PostTest> postTests;
 
 //    @OneToMany(targetEntity = Post.class,cascade = CascadeType.ALL)
 //    @JoinColumn(name="up_fk", referencedColumnName = "auth_user_id")
