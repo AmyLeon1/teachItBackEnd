@@ -2,11 +2,9 @@ package com.teachit.teachItBackEnd.model;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @ToString
 @Setter
@@ -22,5 +20,13 @@ public class Blog {
     private String email;
     private String title;
     private String description;
+
+    @OneToMany(targetEntity = Comment.class, cascade=CascadeType.ALL)
+    @JoinColumn(name = "bc_fk", referencedColumnName = "id")
+    private List<Comment> comments;
+
+//    @OneToMany(targetEntity = Comment.class,cascade = CascadeType.ALL)
+//    @JoinColumn(name="bc_fk", referencedColumnName = "id")
+//    private List<Comment> comments;
 
 }

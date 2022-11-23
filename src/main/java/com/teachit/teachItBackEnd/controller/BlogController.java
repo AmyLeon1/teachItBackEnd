@@ -2,8 +2,10 @@ package com.teachit.teachItBackEnd.controller;
 
 import com.teachit.teachItBackEnd.model.Blog;
 
+import com.teachit.teachItBackEnd.model.Comment;
 import com.teachit.teachItBackEnd.repository.BlogRepo;
 
+import com.teachit.teachItBackEnd.repository.CommentRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,11 +22,57 @@ public class BlogController {
 
     @Autowired
     private BlogRepo blogRepo;
+    @Autowired
+    private CommentRepo commentRepo;
 
+    // ** Endpoints for comment feature of blog posts ** //
+
+    //Passing in blog we want to save the comment to
+    @PostMapping("/blogs/{blog}/comments")
+    public ResponseEntity<Void> createComment(
+             @PathVariable Blog blog, @RequestBody Comment comment){
+        comment.setBlog(blog);
+        Comment createdComment = commentRepo.save(comment);
+
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}").buildAndExpand(createdComment.getCommentId()).toUri();
+
+        return ResponseEntity.created(uri).build();
+
+    }
+//
+//    @GetMapping("/blogs/{blogId}/comments")
+//    public List<Comment> getAllComments(@PathVariable long blogId){
+//        return commentRepo.findByBlogId(blogId);
+//        //return todoService.findAll();
+//    }
+//
+//    @PutMapping("/blogs/{blogId}/comments/{id}")
+//    public ResponseEntity<Comment> updateComment(
+//            @PathVariable long blogId,
+//            @PathVariable long id, @RequestBody Comment comment){
+//
+//        Comment commentUpdated = commentRepo.save(comment);
+//
+//        return new ResponseEntity<Comment>(comment, HttpStatus.OK);
+//    }
+
+
+
+
+    // ** Endpoints for blog posts ** //
     @GetMapping("/users/{email}/blogs")
     public List<Blog> getAllBlogs(@PathVariable String email){
         return blogRepo.findByEmail(email);
         //return todoService.findAll();
+    }
+
+
+
+    @GetMapping("/blogs/{id}")
+    public Blog getBlogById( @PathVariable long id){
+        return blogRepo.findById(id).get();
+        //return todoService.findById(id);
     }
 
 
