@@ -40,6 +40,13 @@ public class BlogController {
         return ResponseEntity.created(uri).build();
 
     }
+
+
+    @GetMapping("/blogs/{blog}/comments")
+    public List<Comment> getAllComments(@PathVariable Blog blog){
+        return commentRepo.findByBlog(blog);
+        //return todoService.findAll();
+    }
 //
 //    @GetMapping("/blogs/{blogId}/comments")
 //    public List<Comment> getAllComments(@PathVariable long blogId){
