@@ -2,10 +2,7 @@ package com.teachit.teachItBackEnd.model;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @ToString
@@ -20,7 +17,10 @@ public class Appointment {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long appId;
     private String date;
-    private String email;
     private String studentEmail;
+    @ManyToOne
+    private User user;
+
+
 
 }

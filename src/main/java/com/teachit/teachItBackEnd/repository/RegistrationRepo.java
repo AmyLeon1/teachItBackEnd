@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 //hold all basic methods for database communication
 //inbuild methods from JPArepository
 @Repository
-public interface RegistrationRepo extends JpaRepository<User, Integer> {
+public interface RegistrationRepo extends JpaRepository<User, String> {
 
     //method declaration for methods not built in to JPARepository
     //JPA repo will create these queries

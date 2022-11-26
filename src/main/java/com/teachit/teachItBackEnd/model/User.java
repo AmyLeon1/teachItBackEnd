@@ -15,14 +15,18 @@ import java.util.List;
 public class User implements Serializable {
 
 
+//    @Column(name = "auth_user_id")
+//    @GeneratedValue(strategy=GenerationType.AUTO)
+//    private int auth_user_id;
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    @Column(name = "auth_user_id")
-    private int auth_user_id;
     private String email;
     private String username;
     private String password;
     private String role;
+
+    @OneToMany
+    @JoinColumn(name = "ua_fk", referencedColumnName = "email")
+    private List<Appointment> appointments;
 
 
     //one user many posts
