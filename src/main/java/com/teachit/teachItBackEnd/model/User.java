@@ -28,6 +28,10 @@ public class User implements Serializable {
     @JoinColumn(name = "ua_fk", referencedColumnName = "email")
     private List<Appointment> appointments;
 
+    @OneToMany
+    @JoinColumn(name = "uAv_fk", referencedColumnName = "email")
+    private List<AvailableDate> availableDates;
+
 
     //one user many posts
     //mapped by the user variable in the post entity
