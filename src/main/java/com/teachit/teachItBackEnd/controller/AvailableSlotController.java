@@ -1,8 +1,7 @@
 package com.teachit.teachItBackEnd.controller;
 
-import com.teachit.teachItBackEnd.model.AvailableDate;
-import com.teachit.teachItBackEnd.model.AvailableTime;
-import com.teachit.teachItBackEnd.model.User;
+import com.teachit.teachItBackEnd.model.*;
+import com.teachit.teachItBackEnd.repository.AppointmentDateRepo;
 import com.teachit.teachItBackEnd.repository.AvaiableSlotRepo;
 import com.teachit.teachItBackEnd.repository.AvailableTimeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +22,9 @@ public class AvailableSlotController {
     @Autowired
     AvailableTimeRepo availableTimeRepo;
 
+    @Autowired
+    AppointmentDateRepo appointmentDateRepo;
+
 
     // Method to create and save an available date into the database //
     @CrossOrigin(origins = "http://localhost:4200")
@@ -34,18 +36,32 @@ public class AvailableSlotController {
         AvailableDate createdAvailableDate = avaiableSlotRepo.save(availableDate);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}").buildAndExpand(createdAvailableDate.getId()).toUri();
+                .path("/{date}").buildAndExpand(createdAvailableDate.getDate()).toUri();
 
         return ResponseEntity.created(uri).build();
     }
 
 
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping("/users/{user}/availableDates1")
+    public AvailableDate createAvailableDate1(
+            @PathVariable User user, @RequestBody AvailableDate availableDate
+    ){
+        availableDate.setUser(user);
+        AvailableDate createdAvailableDate = avaiableSlotRepo.save(availableDate);
+
+        return createdAvailableDate;
+
+    }
+
+
     // Method to save available time into the database with one at a time input //
-    @PostMapping("/users/{availableDate}/availableTimes")
+    @PostMapping("/users/{user}/{availableDate}/availableTimes")
     public ResponseEntity<Void> createAvailableTime(
-            @PathVariable AvailableDate availableDate, @RequestBody AvailableTime availableTime
+            @PathVariable AvailableDate availableDate,  @PathVariable User user,@RequestBody AvailableTime availableTime
     ){
         availableTime.setAvailableDate(availableDate);
+        availableTime.setUser(user);
         AvailableTime createdAvailableTime = availableTimeRepo.save(availableTime);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -81,5 +97,53 @@ public class AvailableSlotController {
 
         return availableTime;
     }
+
+    @GetMapping("/users/{user}/availableDates/{date}")
+    public AvailableDate getDateByDate(@PathVariable User user, @PathVariable String date){
+        return avaiableSlotRepo.findByUserAndDate(user, date);
+        //return todoService.findById(id);
+    }
+
+
+    //Get all available dates for a particular user
+    @GetMapping("/users/{user}/availableDates")
+    public List<AvailableDate> getAllAvailabeDates(@PathVariable User user){
+        return avaiableSlotRepo.findByUser(user);
+
+    }
+
+//    @GetMapping("/users/{user}/{availableDate}/availableTimes")
+//    public List<AvailableTime> getAllAvailabeTimes(@PathVariable User user,@PathVariable AvailableDate availableDate){
+//        return availableTimeRepo.findByAvailableDate(availableDate);
+//
+//    }
+
+
+     //Endpoint to allow retrieval of available times for a particular user at a particular time //
+    @GetMapping("/users/{user}/availableDates/{availableDate}/availableTimes")
+    public List<AvailableTime> getAvailableTimesForDate(@PathVariable User user, @PathVariable AvailableDate availableDate){
+        return availableTimeRepo.findByUserAndAvailableDate(user, availableDate);
+        //return todoService.findById(id);
+    }
+
+
+//    @CrossOrigin(origins = "http://localhost:4200")
+//    @PostMapping("/users/{user}/availableDates2")
+//    public ResponseEntity<Void> createAvailableDate2(
+//            @PathVariable User user, @RequestBody AppointmentDate appointmentDate
+//    ){
+//        appointmentDate.setUser(user);
+//        AppointmentDate createdAppointmentDate = appointmentDateRepo.save(appointmentDate);
+//
+//        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+//                .path("/{date}").buildAndExpand(createdAppointmentDate.getDate()).toUri();
+//
+//        return ResponseEntity.created(uri).build();
+//    }
+
+
+
+
+
 
 }

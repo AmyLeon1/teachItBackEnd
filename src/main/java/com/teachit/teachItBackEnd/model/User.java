@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -14,10 +15,6 @@ import java.util.List;
 @Entity
 public class User implements Serializable {
 
-
-//    @Column(name = "auth_user_id")
-//    @GeneratedValue(strategy=GenerationType.AUTO)
-//    private int auth_user_id;
     @Id
     private String email;
     private String username;
@@ -28,9 +25,23 @@ public class User implements Serializable {
     @JoinColumn(name = "ua_fk", referencedColumnName = "email")
     private List<Appointment> appointments;
 
-    @OneToMany
-    @JoinColumn(name = "uAv_fk", referencedColumnName = "email")
-    private List<AvailableDate> availableDates;
+    @ManyToMany
+    @JoinTable(
+            name="appointment_date",
+            joinColumns = @JoinColumn(name="user_email"),
+            inverseJoinColumns = @JoinColumn(name="id")
+
+    )
+    public List<AppointmentDate> appointmentDates = new ArrayList<>();
+
+    public List<AppointmentDate> getAppointmentDates(){
+
+        return appointmentDates;
+    }
+
+
+    //remove from here id it starts going wrong
+
 
 
     //one user many posts

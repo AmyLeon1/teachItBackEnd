@@ -1,9 +1,11 @@
 package com.teachit.teachItBackEnd.controller;
 
 
+import com.teachit.teachItBackEnd.model.AppointmentDate;
 import com.teachit.teachItBackEnd.model.Blog;
 import com.teachit.teachItBackEnd.model.Todo;
 import com.teachit.teachItBackEnd.model.User;
+import com.teachit.teachItBackEnd.repository.AppointmentDateRepo;
 import com.teachit.teachItBackEnd.repository.RegistrationRepo;
 import com.teachit.teachItBackEnd.service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +23,16 @@ public class RegistrationController {
 
     @Autowired
     private RegistrationRepo regRepo;
+
+
+
     //method whenever user submits the form
     //save data into the db
     //@RequestMapping to map it to a URL
+
+
+
+
 
     //@CrossOrigin(origins = "http://localhost:4200")
     @PostMapping(path= "/registerUser")

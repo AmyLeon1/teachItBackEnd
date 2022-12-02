@@ -21,4 +21,7 @@ public class AvailableTime {
 
     @ManyToOne
     private AvailableDate availableDate;
+
+    @ManyToOne
+    private User user;
 }
