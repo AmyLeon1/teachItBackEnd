@@ -8,6 +8,8 @@ import com.teachit.teachItBackEnd.repository.AppointmentTimeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/appointmentTimes")
@@ -18,6 +20,32 @@ public class AppointmentTimeController {
 
     @Autowired
     AppointmentDateRepo appointmentDateRepo;
+
+
+    @GetMapping("{id}/times/id")
+    public List<AppointmentTime> getTimeByDateId(@PathVariable Long id){
+//        if(!appointmentDateRepo.existsById(date)){
+//            System.out.println("not found");
+//        }
+        System.out.println("**** IN METHOD TO FIND TIMES BY ID ***********");
+        List<AppointmentTime> appointmentTimesList=appointmentTimeRepo.findByAppointmentDatesId(id);
+
+        return appointmentTimeRepo.findByAppointmentDatesId(id);
+
+    }
+
+//    @GetMapping("{date}/times")
+//    public List<AppointmentTime> getTimeByDate(@PathVariable String date){
+////        if(!appointmentDateRepo.existsById(date)){
+////            System.out.println("not found");
+////        }
+//        List<AppointmentTime> appointmentTimesList=appointmentTimeRepo.findByAppointmentDatesDate(date);
+//
+//        return appointmentTimeRepo.findAll();
+//
+//    }
+
+
 
     // INSERT TIME INTO THE DATE //
     @PutMapping("/{date}/dates/times/{time}")

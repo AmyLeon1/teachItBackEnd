@@ -20,6 +20,41 @@ public class AppointmentDateController {
     @Autowired
     RegistrationRepo registrationRepo;
 
+    @GetMapping("/user/{email}/dates/{date}")
+    public AppointmentDate getDateByEmailAndDate(@PathVariable String email, @PathVariable String date) throws Exception {
+//        AppointmentDate requestedDate = appointmentDateRepo.findByUsersEmailAndDate(email, date);
+//        System.out.println("In get appointment date method");
+//        System.out.println("Printing out date" + date);
+//        User user = registrationRepo.findById(email).get();
+//        System.out.println("Printing out email" + email);
+//        System.out.println("In get appointment requestedDate" + requestedDate);
+//        if(requestedDate == null){
+//            throw new Exception("The user does not have any availability for this date");
+//        }
+
+        System.out.println("In get appointment date method");
+        System.out.println("Printing out date" + date);
+        System.out.println("Printing out email" + email);
+
+        User user = registrationRepo.findById(email).get();
+        System.out.println("Past finding user");
+        System.out.println("Printing out user object email" + user.getEmail());
+
+        AppointmentDate appointmentDate = appointmentDateRepo.findByDate(date);
+
+        if(appointmentDate == null){
+            throw new Exception("Your chosen date, " + date + " is not availavle");
+        }
+        System.out.println("Printing out date object" + appointmentDate.getDate());
+
+//        if(!user.appointmentDates.contains(appointmentDate)){
+//            throw new Exception("Your chosen date, " + appointmentDate + " is not availavle");
+//        }
+
+
+        return appointmentDateRepo.findByUsersEmailAndDate(user.getEmail(), date);
+    }
+
     @GetMapping("{email}/dates")
     public List<AppointmentDate> getDatesByUser(@PathVariable String email){
        if(!registrationRepo.existsById(email)){
@@ -61,11 +96,11 @@ public class AppointmentDateController {
         System.out.println("Printing email from user:" + user.getEmail());
         AppointmentDate appointmentDate = appointmentDateRepo.findByDate(date);
         System.out.println("Printing date:" + date);
-        System.out.println("Printing sppointmentdate:" + appointmentDate);
-        System.out.println("Printing sppointmentdate:" + appointmentDate.getId());
+//        System.out.println("Printing sppointmentdate:" + appointmentDate);
+//        System.out.println("Printing sppointmentdate:" + appointmentDate.getId());
         //REMOVE IF NOT WORKING
         if(user.appointmentDates.contains(appointmentDate)){
-            throw new Exception("Your chosen date, " + appointmentDate + " is already registered");
+            throw new Exception("Your chosen date, " + appointmentDate + " has already been added to your account");
         }
 
         //

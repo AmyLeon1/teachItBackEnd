@@ -226,5 +226,52 @@ public class AppointmentController {
 
 
 
+
+
+
+
+    @PostMapping(path= "/users/{user}/appointments3")
+    public ResponseEntity<Void> registerAppointment3(@PathVariable User user,
+                                                     @RequestBody Appointment appointment) throws Exception {
+        //set the user
+        appointment.setUser(user);
+
+        ///assign string with required date
+        String requestedDate = appointment.getDate();
+        System.out.println("Here is the requested date" + requestedDate);
+
+        //assign user object with requested user(teacher)
+        User requestedUser = appointment.getUser();
+        System.out.println("Here is the requested user" + requestedUser);
+
+        //if request user and requested date are not null enter if block
+        if(requestedUser != null && !equals(requestedDate)){
+
+            //look for current appointment with requestedUser and requestedDate
+            Appointment appObj = appointmentRepo.findByUserAndDate(requestedUser, requestedDate);
+
+
+            System.out.println("We have passed findByUserAndDate");
+
+            //if an appointment is found with this criteria the throw exception
+            if(appObj!=null){
+
+                // if(appObj != null){
+                throw new Exception("Appointment with " + appObj + " is already registered");
+            }
+        }
+        //otherwise save the new appointment into the database via the repository
+        Appointment appObj;
+        appObj = appointmentRepo.save(appointment);
+
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{appId}").buildAndExpand(appObj.getAppId()).toUri();
+
+        return ResponseEntity.created(uri).build();
+
+    }
+
+
+
 }
 

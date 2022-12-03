@@ -18,6 +18,7 @@ public class Appointment {
     private Long appId;
     private String date;
     private String studentEmail;
+    private String time;
     @ManyToOne
     private User user;
 
