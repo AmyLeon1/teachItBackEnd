@@ -16,6 +16,7 @@ public class Comment {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long commentId;
     private String body;
+    private String owner;
     @ManyToOne
     private Blog blog;
 
