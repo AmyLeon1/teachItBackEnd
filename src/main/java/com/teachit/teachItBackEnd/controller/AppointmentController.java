@@ -21,6 +21,16 @@ public class AppointmentController {
     @Autowired
     private RegistrationRepo registrationRepo;
 
+    // *** Endpoint for appointment cancellation/deletion ***//
+    @DeleteMapping("/users/appointments/{id}")
+    public ResponseEntity<Void> cancelAppointment(
+            @PathVariable long id){
+
+        appointmentRepo.deleteById(id);
+
+        return ResponseEntity.noContent().build();
+    }
+
 
 //    @PostMapping("/users/{user}/appointments")
 //    @PostMapping("/users/{user}/appointments")
@@ -271,8 +281,6 @@ public class AppointmentController {
         return ResponseEntity.created(uri).build();
 
     }
-
-
 
     @PostMapping(path= "/users/{email}/appointments4")
     public ResponseEntity<Void> registerAppointment4(@PathVariable String email,
