@@ -3,6 +3,8 @@ package com.teachit.teachItBackEnd.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +22,8 @@ public class User implements Serializable {
     private String username;
     private String password;
     private String role;
+    private byte picByte;
+    private String aboutMe;
 
     @OneToMany
     @JoinColumn(name = "ua_fk", referencedColumnName = "email")
@@ -38,23 +42,5 @@ public class User implements Serializable {
 
         return appointmentDates;
     }
-
-
-    //remove from here id it starts going wrong
-
-
-
-    //one user many posts
-    //mapped by the user variable in the post entity
-//    @OneToMany(mappedBy = "user")
-//    private List<PostTest> postTests;
-
-//    @OneToMany(targetEntity = Post.class,cascade = CascadeType.ALL)
-//    @JoinColumn(name="up_fk", referencedColumnName = "auth_user_id")
-//    private List<Post> posts;
-
-
-
-
 
 }
