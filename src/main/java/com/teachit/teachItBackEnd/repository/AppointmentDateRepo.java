@@ -1,7 +1,6 @@
 package com.teachit.teachItBackEnd.repository;
 
 import com.teachit.teachItBackEnd.model.AppointmentDate;
-import com.teachit.teachItBackEnd.model.AppointmentDatePrimaryData;
 import com.teachit.teachItBackEnd.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -15,6 +14,9 @@ public interface AppointmentDateRepo extends JpaRepository<AppointmentDate, Long
    // List<AppointmentDate> findAppointmentDateByEmail(String email);
 
     AppointmentDate findByUsersEmailAndDate(String email, String date);
+    AppointmentDate findByUsersAndDate(User user, String date);
+
+
 
     List<AppointmentDate> findAllByUsersEmail(String email);
 

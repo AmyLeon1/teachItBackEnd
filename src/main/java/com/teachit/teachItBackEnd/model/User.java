@@ -3,8 +3,6 @@ package com.teachit.teachItBackEnd.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,16 +29,10 @@ public class User implements Serializable {
 
     @ManyToMany
     @JoinTable(
-            name="appointment_date",
-            joinColumns = @JoinColumn(name="user_email"),
-            inverseJoinColumns = @JoinColumn(name="id")
-
+            name = "appointment_date",
+            joinColumns = @JoinColumn(name = "user_email"),
+            inverseJoinColumns = @JoinColumn(name = "id")
     )
     public List<AppointmentDate> appointmentDates = new ArrayList<>();
-
-    public List<AppointmentDate> getAppointmentDates(){
-
-        return appointmentDates;
-    }
 
 }

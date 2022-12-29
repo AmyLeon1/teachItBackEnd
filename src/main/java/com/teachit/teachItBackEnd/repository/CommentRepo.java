@@ -9,10 +9,7 @@ import java.util.List;
 @Repository
 public interface CommentRepo extends JpaRepository<Comment, Long> {
 
-//    List<Comment> findByBlogId(Long id);
-
+    /* Retrieve all comments that belong to a certain  blog*/
     List<Comment> findByBlog(Blog blog);
-
-
 
 }

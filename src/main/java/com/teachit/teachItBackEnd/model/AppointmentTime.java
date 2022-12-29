@@ -19,7 +19,6 @@ public class AppointmentTime {
     private Long Id;
     private String time;
 
-
     @JsonIgnore
     @ManyToMany(mappedBy = "appointmentTimes")
     private List<AppointmentDate> appointmentDates;
@@ -28,7 +27,6 @@ public class AppointmentTime {
 
         return appointmentDates;
     }
-
     public void setAppointmentDates(List<AppointmentDate> appointmentDates){
 
         this.appointmentDates=appointmentDates;

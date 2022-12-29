@@ -9,27 +9,23 @@ import org.springframework.stereotype.Service;
 @Service
 public class RegistrationService {
 
-    //autowire an object of the repo so we can use the methods
-    //repo injected
+    //inject repository
     @Autowired
     private RegistrationRepo repo;
 
-    public User saveUser(User user){
-
-        //call the inbuilt method of the repo
-        //save user
+    /**** Method to save new user during registration ****/
+    public User saveUser(User user) {
+        //save user via the repository
         return repo.save(user);
-
     }
 
-
-    public User fetchUserByEmail(String email){
-        //check
-       return repo.findByEmail(email);
+    /**** Method to retrieve a user by email ****/
+    public User fetchUserByEmail(String email) {
+        return repo.findByEmail(email);
     }
 
-    public User fetchUserByEmailAndPassword(String email, String password){
-        //check
+    /**** Method to retrieve a user by email & password ****/
+    public User fetchUserByEmailAndPassword(String email, String password) {
         return repo.findByEmailAndPassword(email, password);
 
     }

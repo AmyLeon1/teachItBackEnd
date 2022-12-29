@@ -6,6 +6,7 @@ import com.teachit.teachItBackEnd.model.Comment;
 import com.teachit.teachItBackEnd.repository.BlogRepo;
 
 import com.teachit.teachItBackEnd.repository.CommentRepo;
+import com.teachit.teachItBackEnd.service.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,117 +16,73 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 @CrossOrigin(origins = "http://localhost:4200")
-//@RestController
 @RestController
 public class BlogController {
 
 
     @Autowired
     private BlogRepo blogRepo;
+
     @Autowired
-    private CommentRepo commentRepo;
-
-    // ** Endpoints for comment feature of blog posts ** //
-
-    //Passing in blog we want to save the comment to
-    @PostMapping("/blogs/{blog}/comments")
-    public ResponseEntity<Void> createComment(
-             @PathVariable Blog blog, @RequestBody Comment comment){
-        comment.setBlog(blog);
-        Comment createdComment = commentRepo.save(comment);
-
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}").buildAndExpand(createdComment.getCommentId()).toUri();
-
-        return ResponseEntity.created(uri).build();
-
-    }
-
-
-    @GetMapping("/blogs/{blog}/comments")
-    public List<Comment> getAllComments(@PathVariable Blog blog){
-        return commentRepo.findByBlog(blog);
-        //return todoService.findAll();
-    }
-//
-//    @GetMapping("/blogs/{blogId}/comments")
-//    public List<Comment> getAllComments(@PathVariable long blogId){
-//        return commentRepo.findByBlogId(blogId);
-//        //return todoService.findAll();
-//    }
-//
-//    @PutMapping("/blogs/{blogId}/comments/{id}")
-//    public ResponseEntity<Comment> updateComment(
-//            @PathVariable long blogId,
-//            @PathVariable long id, @RequestBody Comment comment){
-//
-//        Comment commentUpdated = commentRepo.save(comment);
-//
-//        return new ResponseEntity<Comment>(comment, HttpStatus.OK);
-//    }
-
-
+    private BlogService blogService;
 
 
     // ** Endpoints for blog posts ** //
+
+
+    /* Method to retrieve all blog posts made by a certain user*/
     @GetMapping("/users/{email}/blogs")
     public List<Blog> getAllBlogs(@PathVariable String email){
-        return blogRepo.findByEmail(email);
-        //return todoService.findAll();
+        return blogService.getByEmail(email);
     }
 
-
-
+    /* Method to retrieve a certain blog by passing in its id */
     @GetMapping("/blogs/{id}")
     public Blog getBlogById( @PathVariable long id){
-        return blogRepo.findById(id).get();
-        //return todoService.findById(id);
+        return blogService.findById(id);
     }
 
+//    /* Method to retrieve a certain blog by passing in the users email and blog id*/
+//    @GetMapping("/users/{email}/blogs/{id}")
+//    public Blog getBlog(@PathVariable String email, @PathVariable long id){
+//        return blogRepo.findById(id).get();
+//    }
 
-    @GetMapping("/users/{email}/blogs/{id}")
-    public Blog getBlog(@PathVariable String email, @PathVariable long id){
-        return blogRepo.findById(id).get();
-        //return todoService.findById(id);
-    }
-
-    //DELETE /users/{username}/todos/{id}
+    /* Method to delete blogs */
     @DeleteMapping("/users/{email}/blogs/{id}")
     public ResponseEntity<Void> deleteBlog(
             @PathVariable String email, @PathVariable long id){
 
-        //Todo todo = todoService.deleteById(id);
-        blogRepo.deleteById(id);
-
+        //call on blogService to delete the specified blog by passing in the id
+        blogService.deleteBlog(id);
         return ResponseEntity.noContent().build();
-        //return ResponseEntity.notFound().build();
     }
 
-
+    /* Method to update an existing blog */
     @PutMapping("/users/{email}/blogs/{id}")
     public ResponseEntity<Blog> updateBlog(
             @PathVariable String email,
             @PathVariable long id, @RequestBody Blog blog){
 
-        //Todo todoUpdated = todoService.save(todo);
-        Blog blogUpdated = blogRepo.save(blog);
+        // pass the updated blog to blogService to be saved in the repo
+        Blog blogUpdated = blogService.saveBlog(blog);
 
         return new ResponseEntity<Blog>(blog, HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    /* Method to create a new blog */
     @PostMapping("/users/{email}/blogs")
     public ResponseEntity<Void> createBlog(
             @PathVariable String email, @RequestBody Blog blog
     ){
+        //set email with the email passed in as path variable
         blog.setEmail(email);
-        Blog createdBlog = blogRepo.save(blog);
+        // pass the new blog to blogService to be saved in the repo
+        Blog createdBlog = blogService.saveBlog(blog);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(createdBlog.getId()).toUri();
 
         return ResponseEntity.created(uri).build();
-
-
     }
 }

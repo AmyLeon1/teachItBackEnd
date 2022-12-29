@@ -1,11 +1,6 @@
 package com.teachit.teachItBackEnd.controller;
 
-
-import com.teachit.teachItBackEnd.model.AppointmentDate;
-import com.teachit.teachItBackEnd.model.Blog;
-import com.teachit.teachItBackEnd.model.Todo;
 import com.teachit.teachItBackEnd.model.User;
-import com.teachit.teachItBackEnd.repository.AppointmentDateRepo;
 import com.teachit.teachItBackEnd.repository.RegistrationRepo;
 import com.teachit.teachItBackEnd.service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,78 +12,70 @@ import java.util.List;
 @RestController
 public class RegistrationController {
 
-    //use Autowired to inject dependency
     @Autowired
-    private RegistrationService  registrationService;
+    private RegistrationService registrationService;
 
     @Autowired
     private RegistrationRepo regRepo;
 
-
-
-    //method whenever user submits the form
-    //save data into the db
-    //@RequestMapping to map it to a URL
-
-
-
-
-
-    //@CrossOrigin(origins = "http://localhost:4200")
-    @PostMapping(path= "/registerUser")
+    /**** Method to register a user ****/
+    @PostMapping(path = "/registerUser")
     public User registerUser(@RequestBody User user) throws Exception {
 
-        //check if email already exists in db
+        /* Checking if email already exists in the db*/
+        //get email and store in variable
         String tempEmail = user.getEmail();
-        if(tempEmail != null && !equals(tempEmail)){
 
-           User userObj = registrationService.fetchUserByEmail(tempEmail);
-           if(userObj != null){
-               throw new Exception("User with " + tempEmail + " is already registered");
-           }
+        //if tempEmail isn't blank enter if block
+        if (tempEmail != null && !equals(tempEmail)) {
+            // search for a user with tempEmail & assign it to userObj
+            User userObj = registrationService.fetchUserByEmail(tempEmail);
+            //if userObj isn't null(user is found/already registered with this email) - throw exception
+            if (userObj != null) {
+                throw new Exception("User with " + tempEmail + " is already registered");
+            }
         }
 
+        // otherwise pass in user to the registration service save method to be stored in the db
         User userObj = null;
-        //pass in user to the registration service save method
-       userObj = registrationService.saveUser(user);
+        userObj = registrationService.saveUser(user);
         return userObj;
     }
 
-   // @CrossOrigin(origins = "http://localhost:4200")
+    /**** Method to login ****/
     @PostMapping("/login")
     public User loginUser(@RequestBody User user) throws Exception {
-        //check if combo user id and password is present in db
+        //getting user email and password and storing them in variables
         String tempEmail = user.getEmail();
         String tempPassword = user.getPassword();
         User userObj = null; //create user object as we have to return it
 
-        if(tempEmail !=null && tempPassword !=null){
-           userObj = registrationService.fetchUserByEmailAndPassword(tempEmail, tempPassword);
-
+        /* if email and password are not null check the database for this combination of
+         username & password and assign it to userObj*/
+        if (tempEmail != null && tempPassword != null) {
+            userObj = registrationService.fetchUserByEmailAndPassword(tempEmail, tempPassword);
         }
 
-        if(userObj ==null){
+        /* if this combination is not found, userObj is null and an error is thrown */
+        if (userObj == null) {
             throw new Exception("This user does not exist");
         }
+
+        //if combo is correct and user is found return userObj
         return userObj;
     }
 
-    //retrieve user details by searching their username
-    //get request
-    //username path variable
 
-    //get user details by searching email
+    /**** Method to get user details by searching email ****/
     @GetMapping("/users/{email}")
-    public User getUser(@PathVariable String email){
+    public User getUser(@PathVariable String email) {
         return regRepo.findByEmail(email);
-        //return todoService.findById(id);
     }
 
+    /**** Method to retrieve all users ****/
     @GetMapping("/users")
-    public List<User> getAllUsers(){
+    public List<User> getAllUsers() {
         return regRepo.findAll();
-        //return todoService.findAll();
     }
-
 
 }

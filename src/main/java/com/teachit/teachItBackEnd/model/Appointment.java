@@ -23,5 +23,4 @@ public class Appointment {
     private User user;
 
 
-
 }

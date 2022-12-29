@@ -21,4 +21,7 @@ public interface AppointmentRepo extends JpaRepository<Appointment, Long> {
     Appointment findByDate(String date);
 
     Appointment findByUserAndDate(User user, String date);
+
+
+
 }

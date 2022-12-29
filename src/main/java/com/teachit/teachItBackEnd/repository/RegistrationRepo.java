@@ -5,16 +5,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 //hold all basic methods for database communication
-//inbuild methods from JPArepository
+//inbuilt methods from JPArepository
 @Repository
 public interface RegistrationRepo extends JpaRepository<User, String> {
 
-    //method declaration for methods not built in to JPARepository
-    //JPA repo will create these queries
+    /**** Find users by email ****/
     public User findByEmail(String email);
+
+    /**** Find users by email & password ****/
     public User findByEmailAndPassword(String email,String Password);
-
-
-
 
 }
