@@ -42,11 +42,6 @@ public class BlogController {
         return blogService.findById(id);
     }
 
-//    /* Method to retrieve a certain blog by passing in the users email and blog id*/
-//    @GetMapping("/users/{email}/blogs/{id}")
-//    public Blog getBlog(@PathVariable String email, @PathVariable long id){
-//        return blogRepo.findById(id).get();
-//    }
 
     /* Method to delete blogs */
     @DeleteMapping("/users/{email}/blogs/{id}")

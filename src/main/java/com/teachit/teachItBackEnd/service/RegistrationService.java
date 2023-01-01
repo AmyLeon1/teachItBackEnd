@@ -5,7 +5,6 @@ import com.teachit.teachItBackEnd.repository.RegistrationRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class RegistrationService {
 
@@ -27,6 +26,5 @@ public class RegistrationService {
     /**** Method to retrieve a user by email & password ****/
     public User fetchUserByEmailAndPassword(String email, String password) {
         return repo.findByEmailAndPassword(email, password);
-
     }
 }

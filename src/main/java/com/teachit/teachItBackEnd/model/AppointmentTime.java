@@ -18,7 +18,6 @@ public class AppointmentTime {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long Id;
     private String time;
-
     @JsonIgnore
     @ManyToMany(mappedBy = "appointmentTimes")
     private List<AppointmentDate> appointmentDates;

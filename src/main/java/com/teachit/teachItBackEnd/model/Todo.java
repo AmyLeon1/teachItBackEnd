@@ -23,7 +23,6 @@ public class Todo {
     private String email;
     private String description;
     private Date targetDate;
-    private boolean isDone;
 
 
 }

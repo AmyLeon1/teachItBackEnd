@@ -17,6 +17,7 @@ public class Comment {
     private Long commentId;
     private String body;
     private String owner;
+    private String date;
     @ManyToOne
     private Blog blog;
 

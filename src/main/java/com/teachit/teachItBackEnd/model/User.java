@@ -20,8 +20,8 @@ public class User implements Serializable {
     private String username;
     private String password;
     private String role;
-    private byte picByte;
     private String aboutMe;
+    private String nationality;
 
     @OneToMany
     @JoinColumn(name = "ua_fk", referencedColumnName = "email")
@@ -34,5 +34,4 @@ public class User implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "id")
     )
     public List<AppointmentDate> appointmentDates = new ArrayList<>();
-
 }

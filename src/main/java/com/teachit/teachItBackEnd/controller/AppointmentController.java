@@ -37,7 +37,7 @@ public class AppointmentController {
         return ResponseEntity.noContent().build();
     }
 
-
+    /* Endpoint to retrieve appointments for a teacher */
     @GetMapping("/users/{user}/appointments")
     public List<Appointment> getAllAppointments(@PathVariable User user) {
         return appointentService.findByUser(user);
