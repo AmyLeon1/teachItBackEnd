@@ -11,12 +11,9 @@ import java.util.List;
 public interface AppointmentDateRepo extends JpaRepository<AppointmentDate, Long> {
     AppointmentDate findByDate(String date);
 
-   // List<AppointmentDate> findAppointmentDateByEmail(String email);
-
     AppointmentDate findByUsersEmailAndDate(String email, String date);
+
     AppointmentDate findByUsersAndDate(User user, String date);
-
-
 
     List<AppointmentDate> findAllByUsersEmail(String email);
 

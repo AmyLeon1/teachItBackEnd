@@ -15,20 +15,21 @@ import java.util.List;
 public class AppointmentTime {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long Id;
     private String time;
     @JsonIgnore
     @ManyToMany(mappedBy = "appointmentTimes")
     private List<AppointmentDate> appointmentDates;
 
-    public List<AppointmentDate> getAppointmentDates(){
+    public List<AppointmentDate> getAppointmentDates() {
 
         return appointmentDates;
     }
-    public void setAppointmentDates(List<AppointmentDate> appointmentDates){
 
-        this.appointmentDates=appointmentDates;
+    public void setAppointmentDates(List<AppointmentDate> appointmentDates) {
+
+        this.appointmentDates = appointmentDates;
     }
 
 

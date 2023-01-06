@@ -20,7 +20,7 @@ public class CommentService {
     }
 
     /* Retrieve all comments for a particular blog via the repository */
-    public List<Comment> getByBlog(Blog blog){
+    public List<Comment> getByBlog(Blog blog) {
         return commentRepo.findByBlog(blog);
     }
 }

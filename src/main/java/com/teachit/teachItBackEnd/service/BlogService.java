@@ -1,8 +1,6 @@
 package com.teachit.teachItBackEnd.service;
 
 import com.teachit.teachItBackEnd.model.Blog;
-import com.teachit.teachItBackEnd.model.Comment;
-import com.teachit.teachItBackEnd.model.HomeworkFile;
 import com.teachit.teachItBackEnd.repository.BlogRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

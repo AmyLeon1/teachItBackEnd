@@ -20,21 +20,25 @@ public class AppointmentService {
         return repo.save(appointment);
     }
 
-   public List<Appointment> findByUser(User user){
+    public List<Appointment> findByUser(User user) {
         return repo.findByUser(user);
     }
 
-    public List<Appointment> findByStudentEmail (String studentEmail){
+    public List<Appointment> findByStudentEmail(String studentEmail) {
         return repo.findByStudentEmail(studentEmail);
     }
 
-    public void deleteById(long id){
+    public void deleteById(long id) {
         //call repository's deleteById method and pass in supplied id
         repo.deleteById(id);
     }
 
-    public Appointment findByUserAndDate(User user, String date){
-     return repo.findByUserAndDate(user, date);
+    public Appointment findByUserAndDate(User user, String date) {
+        return repo.findByUserAndDate(user, date);
+    }
+
+    public Appointment findByUserAndDateAndTime(User user, String date, String time) {
+        return repo.findByUserAndDateAndTime(user, date, time);
     }
 
 }

@@ -13,6 +13,6 @@ public interface RegistrationRepo extends JpaRepository<User, String> {
     public User findByEmail(String email);
 
     /**** Find users by email & password ****/
-    public User findByEmailAndPassword(String email,String Password);
+    public User findByEmailAndPassword(String email, String Password);
 
 }

@@ -9,7 +9,5 @@ import java.util.List;
 
 @Repository
 public interface BlogRepo extends JpaRepository<Blog, Long> {
-
     List<Blog> findByEmail(String email);
-
 }

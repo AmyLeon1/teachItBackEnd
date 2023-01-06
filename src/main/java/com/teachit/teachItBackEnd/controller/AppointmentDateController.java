@@ -27,7 +27,7 @@ public class AppointmentDateController {
         User user = registrationRepo.findById(email).get();
         AppointmentDate appointmentDate = appointmentDateRepo.findByDate(date);
 
-        if(appointmentDate == null){
+        if (appointmentDate == null) {
             throw new Exception("Your chosen date, " + date + " is not availavle");
         }
         System.out.println("Printing out date object" + appointmentDate.getDate());
@@ -36,11 +36,11 @@ public class AppointmentDateController {
 
     /* Endpoint to retrieve all dates for a particular user */
     @GetMapping("{email}/dates")
-    public List<AppointmentDate> getDatesByUser(@PathVariable String email){
-       if(!registrationRepo.existsById(email)){
-           System.out.println("not found");
-       }
-       List<AppointmentDate> appointmentDatesList=appointmentDateRepo.findAllByUsersEmail(email);
+    public List<AppointmentDate> getDatesByUser(@PathVariable String email) {
+        if (!registrationRepo.existsById(email)) {
+            System.out.println("not found");
+        }
+        List<AppointmentDate> appointmentDatesList = appointmentDateRepo.findAllByUsersEmail(email);
 
         return appointmentDateRepo.findAll();
     }
@@ -54,7 +54,7 @@ public class AppointmentDateController {
         AppointmentDate requestedDateObj = appointmentDateRepo.findByDate(requestedDate);
 
         //if date is already in the database throw this exception
-        if(requestedDateObj!=null){
+        if (requestedDateObj != null) {
             System.out.println("date already registered" + requestedDate);
             throw new Exception("Your chosen date, " + requestedDate + " is already registered");
         }
@@ -67,7 +67,7 @@ public class AppointmentDateController {
     /* Endpoint to add a date into a user object */
     @PutMapping("/{userEmail}/dates/{date}")
     User addDateToUser(
-            @PathVariable String userEmail,  @PathVariable String date) throws Exception {
+            @PathVariable String userEmail, @PathVariable String date) throws Exception {
 
         //find the user in the database by searching with email that was supplied as a path variable
         User user = registrationRepo.findById(userEmail).get();
@@ -76,7 +76,7 @@ public class AppointmentDateController {
         AppointmentDate appointmentDate = appointmentDateRepo.findByDate(date);
 
         //if this user has already added this date, throw an exception
-        if(user.appointmentDates.contains(appointmentDate)){
+        if (user.appointmentDates.contains(appointmentDate)) {
             throw new Exception("Your chosen date, " + appointmentDate + " has already been added to your account");
         }
         //otherwise add it to their appointmentDates[]

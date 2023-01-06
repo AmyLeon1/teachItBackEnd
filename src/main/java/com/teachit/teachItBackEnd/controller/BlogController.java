@@ -15,13 +15,10 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class BlogController {
-
-
-    @Autowired
-    private BlogRepo blogRepo;
 
     @Autowired
     private BlogService blogService;
@@ -29,16 +26,15 @@ public class BlogController {
 
     // ** Endpoints for blog posts ** //
 
-
     /* Method to retrieve all blog posts made by a certain user*/
     @GetMapping("/users/{email}/blogs")
-    public List<Blog> getAllBlogs(@PathVariable String email){
+    public List<Blog> getAllBlogs(@PathVariable String email) {
         return blogService.getByEmail(email);
     }
 
     /* Method to retrieve a certain blog by passing in its id */
     @GetMapping("/blogs/{id}")
-    public Blog getBlogById( @PathVariable long id){
+    public Blog getBlogById(@PathVariable long id) {
         return blogService.findById(id);
     }
 
@@ -46,7 +42,7 @@ public class BlogController {
     /* Method to delete blogs */
     @DeleteMapping("/users/{email}/blogs/{id}")
     public ResponseEntity<Void> deleteBlog(
-            @PathVariable String email, @PathVariable long id){
+            @PathVariable String email, @PathVariable long id) {
 
         //call on blogService to delete the specified blog by passing in the id
         blogService.deleteBlog(id);
@@ -57,7 +53,7 @@ public class BlogController {
     @PutMapping("/users/{email}/blogs/{id}")
     public ResponseEntity<Blog> updateBlog(
             @PathVariable String email,
-            @PathVariable long id, @RequestBody Blog blog){
+            @PathVariable long id, @RequestBody Blog blog) {
 
         // pass the updated blog to blogService to be saved in the repo
         Blog blogUpdated = blogService.saveBlog(blog);
@@ -69,7 +65,7 @@ public class BlogController {
     @PostMapping("/users/{email}/blogs")
     public ResponseEntity<Void> createBlog(
             @PathVariable String email, @RequestBody Blog blog
-    ){
+    ) {
         //set email with the email passed in as path variable
         blog.setEmail(email);
         // pass the new blog to blogService to be saved in the repo

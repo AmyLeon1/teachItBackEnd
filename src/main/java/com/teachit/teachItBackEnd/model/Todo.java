@@ -16,13 +16,11 @@ import java.util.Date;
 @Entity
 public class Todo {
 
-
     @Id
     @GeneratedValue()
     private Long id;
     private String email;
     private String description;
     private Date targetDate;
-
 
 }

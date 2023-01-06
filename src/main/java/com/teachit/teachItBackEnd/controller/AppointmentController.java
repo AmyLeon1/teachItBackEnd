@@ -57,28 +57,37 @@ public class AppointmentController {
 
         //set the user
 //        User user = registrationRepo.findById(email).get();
+        System.out.println("Printing email" + email);
         User user = registrationService.fetchUserByEmail(email);
         appointment.setUser(user);
 
         ///assign string with required date
         String requestedDate = appointment.getDate();
+        System.out.println("requested Date " + requestedDate);
 
+        String requestedTime = appointment.getTime();
+        System.out.println("requested Date " + requestedDate);
         //if request user and requested date are not null enter if block
         if (user != null && !equals(requestedDate)) {
-
+            System.out.println("Check 1 ");
             //look for current appointment with requestedUser and requestedDate
-            Appointment appObj = appointentService.findByUserAndDate(user, requestedDate);
-
-            //if an appointment is found with these details then throw exception
+            Appointment appObj = appointentService.findByUserAndDateAndTime(user, requestedDate, requestedTime);
+            System.out.println("Check 2 ");
+//            if(appObj!=null && appObj.getTime().equals(requestedTime)){
+//                throw new Exception("Appointment with " + appObj.getTime() + " is already registered");
+//            }
+//            if an appointment is found with these details then throw exception
             if (appObj != null) {
-                throw new Exception("Appointment with " + appObj + " is already registered");
+                throw new Exception("Appointment with " + appObj.getDate() + " is already registered");
             }
+            System.out.println("Check 3 ");
         }
         //otherwise save the new appointment into the database by sending it to the service
         //to be passed onto the repository
+        System.out.println("Check 4 ");
         Appointment appObj;
         appObj = appointentService.save(appointment);
-
+        System.out.println("Check 5 ");
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{appId}").buildAndExpand(appObj.getAppId()).toUri();
 

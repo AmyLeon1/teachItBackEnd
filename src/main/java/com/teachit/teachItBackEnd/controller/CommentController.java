@@ -24,7 +24,7 @@ public class CommentController {
     /* Endpoint to save a new comment into the db */
     @PostMapping("/blogs/{blog}/comments")
     public ResponseEntity<Void> createComment(
-            @PathVariable Blog blog, @RequestBody Comment comment){
+            @PathVariable Blog blog, @RequestBody Comment comment) {
         //set blog with path variable
         comment.setBlog(blog);
         //pass in the comment to the service to be saved to the db
@@ -38,7 +38,7 @@ public class CommentController {
 
     /* Endpoint to get all comments related to a particular blog */
     @GetMapping("/blogs/{blog}/comments")
-    public List<Comment> getAllComments(@PathVariable Blog blog){
+    public List<Comment> getAllComments(@PathVariable Blog blog) {
         //pass in blog to the commentService getByBlog method and return the results
         return commentService.getByBlog(blog);
     }
