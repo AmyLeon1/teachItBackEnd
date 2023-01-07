@@ -3,7 +3,6 @@ package com.teachit.teachItBackEnd.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.List;
 
 @ToString

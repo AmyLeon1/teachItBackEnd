@@ -17,5 +17,4 @@ public interface AppointmentDateRepo extends JpaRepository<AppointmentDate, Long
 
     List<AppointmentDate> findAllByUsersEmail(String email);
 
-
 }

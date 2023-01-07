@@ -1,6 +1,5 @@
 package com.teachit.teachItBackEnd.model;
 
-
 import lombok.*;
 
 import javax.persistence.Entity;

@@ -18,6 +18,8 @@ public class TodoController {
     @Autowired
     private TodoService service;
 
+
+    /* Endpoints for the to-do function of the applciation */
     @GetMapping("/users/{email}/todos")
     public List<Todo> getAllTodos(@PathVariable String email) {
         return service.findByEmail(email);

@@ -1,8 +1,6 @@
 package com.teachit.teachItBackEnd.repository;
 
 import com.teachit.teachItBackEnd.model.Appointment;
-import com.teachit.teachItBackEnd.model.Blog;
-import com.teachit.teachItBackEnd.model.Comment;
 import com.teachit.teachItBackEnd.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

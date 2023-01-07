@@ -3,7 +3,6 @@ package com.teachit.teachItBackEnd.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @ToString
 @Setter
@@ -21,6 +20,5 @@ public class Appointment {
     private String time;
     @ManyToOne
     private User user;
-
 
 }

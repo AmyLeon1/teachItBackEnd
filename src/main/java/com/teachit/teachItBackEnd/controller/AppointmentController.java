@@ -1,8 +1,6 @@
 package com.teachit.teachItBackEnd.controller;
 
 import com.teachit.teachItBackEnd.model.*;
-import com.teachit.teachItBackEnd.repository.AppointmentRepo;
-import com.teachit.teachItBackEnd.repository.RegistrationRepo;
 import com.teachit.teachItBackEnd.service.AppointmentService;
 import com.teachit.teachItBackEnd.service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,16 +16,10 @@ import java.util.List;
 public class AppointmentController {
 
     @Autowired
-    private AppointmentRepo appointmentRepo;
-
-    @Autowired
     private AppointmentService appointentService;
 
     @Autowired
     private RegistrationService registrationService;
-
-    @Autowired
-    private RegistrationRepo registrationRepo;
 
     // *** Endpoint for appointment cancellation/deletion ***//
     @DeleteMapping("/users/appointments/{id}")
@@ -55,45 +47,35 @@ public class AppointmentController {
     public ResponseEntity<Void> registerAppointment(@PathVariable String email,
                                                     @RequestBody Appointment appointment) throws Exception {
 
-        //set the user
-//        User user = registrationRepo.findById(email).get();
-        System.out.println("Printing email" + email);
+        //find user & then set appointment.user
         User user = registrationService.fetchUserByEmail(email);
         appointment.setUser(user);
 
         ///assign string with required date
         String requestedDate = appointment.getDate();
-        System.out.println("requested Date " + requestedDate);
-
+        //assign string with required time
         String requestedTime = appointment.getTime();
-        System.out.println("requested Date " + requestedDate);
         //if request user and requested date are not null enter if block
         if (user != null && !equals(requestedDate)) {
             System.out.println("Check 1 ");
-            //look for current appointment with requestedUser and requestedDate
+            //look for current appointment with user, requestedDate and requestedTime
             Appointment appObj = appointentService.findByUserAndDateAndTime(user, requestedDate, requestedTime);
-            System.out.println("Check 2 ");
-//            if(appObj!=null && appObj.getTime().equals(requestedTime)){
-//                throw new Exception("Appointment with " + appObj.getTime() + " is already registered");
-//            }
-//            if an appointment is found with these details then throw exception
+
+            //if an appointment is found with these details then throw exception
             if (appObj != null) {
                 throw new Exception("Appointment with " + appObj.getDate() + " is already registered");
             }
-            System.out.println("Check 3 ");
         }
         //otherwise save the new appointment into the database by sending it to the service
         //to be passed onto the repository
-        System.out.println("Check 4 ");
         Appointment appObj;
         appObj = appointentService.save(appointment);
-        System.out.println("Check 5 ");
+
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{appId}").buildAndExpand(appObj.getAppId()).toUri();
 
         return ResponseEntity.created(uri).build();
     }
-
 
 }
 
